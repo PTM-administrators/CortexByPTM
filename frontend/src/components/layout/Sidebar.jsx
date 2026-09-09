@@ -26,7 +26,7 @@ export default function Sidebar() {
   );
 
   return (
-    <aside className="w-60 h-screen bg-slate-900 text-slate-100 flex flex-col p-4">
+    <aside className="w-60 h-screen sticky top-0 bg-slate-900 text-slate-100 flex flex-col p-4">
       <div className="flex items-center gap-2 text-xl font-bold mb-8">
         <BrandIcon size={22} className="text-slate-300" aria-hidden="true" />
         Cortex Enterprise

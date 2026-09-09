@@ -76,13 +76,14 @@ def decrypt_credentials(token: str) -> dict[str, Any]:
 def mask_credentials(data: dict[str, Any]) -> dict[str, str]:
     """Ritorna una versione mascherata delle credenziali, sicura da esporre al frontend.
 
-    Mostra solo la lunghezza e le ultime 4 cifre/lettere del valore, mai il valore intero.
+    Nasconde la lunghezza originale sostituendo la prima parte con un numero fisso
+    di asterischi, esponendo solo gli ultimi 4 caratteri.
     """
     masked: dict[str, str] = {}
     for key, value in data.items():
         text = str(value)
         if len(text) <= 4:
-            masked[key] = "•" * len(text)
+            masked[key] = "***"
         else:
-            masked[key] = "•" * (len(text) - 4) + text[-4:]
+            masked[key] = "********" + text[-4:]
     return masked

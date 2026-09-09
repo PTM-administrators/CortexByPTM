@@ -31,11 +31,31 @@ Configurazione attesa (credenziali dell'Integration, provider "rest_api"):
   dedicato quando servirà davvero.
 """
 from typing import Any
+import socket
+import ipaddress
+from urllib.parse import urlparse
 
 import requests
 
 TIMEOUT_SECONDI = 10  # un'API esterna lenta o giù non deve bloccare la richiesta
 _TABELLA_UNICA = "dati"  # pseudo-nome di tabella: un'integrazione API espone una sola risorsa
+
+
+def _is_safe_url(url: str) -> bool:
+    """Verifica che l'URL non punti a IP locali o privati (mitigazione SSRF)."""
+    try:
+        parsed = urlparse(url)
+        if not parsed.hostname:
+            return False
+        # Risolve l'hostname a un IP (mitiga parzialmente se non usano DNS rebinding)
+        ip_str = socket.gethostbyname(parsed.hostname)
+        ip = ipaddress.ip_address(ip_str)
+        # Blocca reti private (es. 192.168, 10.x), loopback (127.x) e l'IP metadata di AWS (169.254)
+        if ip.is_private or ip.is_loopback or ip.is_multicast or ip.is_link_local:
+            return False
+        return True
+    except Exception:
+        return False
 
 
 def _percorso_annidato(payload: Any, percorso: str) -> Any:
@@ -67,6 +87,8 @@ def _scarica_elenco(config: dict[str, Any]) -> list[dict[str, Any]]:
     url = _url_completo(config, config.get("list_path", ""))
     if not url:
         raise ValueError("Questa integrazione non ha un indirizzo API configurato")
+    if not _is_safe_url(url):
+        raise ValueError("URL API non consentito (rischio di sicurezza: indirizzo di rete locale/privata)")
     risposta = requests.get(url, headers=_header_auth(config), timeout=TIMEOUT_SECONDI)
     risposta.raise_for_status()
     elementi = _percorso_annidato(risposta.json(), config.get("list_items_path", ""))
@@ -115,6 +137,8 @@ def get_row(config: dict[str, Any], table_name: str, pk_value: Any) -> dict[str,
     template = (config.get("detail_path_template") or "").strip()
     if template:
         url = _url_completo(config, template.replace("{id}", str(pk_value)))
+        if not _is_safe_url(url):
+            raise ValueError("URL API non consentito (rischio di sicurezza: indirizzo di rete locale/privata)")
         try:
             risposta = requests.get(url, headers=_header_auth(config), timeout=TIMEOUT_SECONDI)
             risposta.raise_for_status()

@@ -38,8 +38,8 @@ from app.services import (
     vista_automatica,
 )
 from app.services.accounting_engine import MESI_IT
-from app.services.integration_providers import find_first_database_integration
-from app.services.llm import AgentDecision, LLMClient, StubLLMClient, get_llm_client
+from app.services.llm import get_llm_client
+from app.services.llm.core import LLMClient, AgentDecision
 from app.tools import scraper_tool
 from app.services.agent_widgets import (
     _chart_andamento,

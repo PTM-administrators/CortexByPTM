@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* L'app oggi è a tema chiaro (bg-slate-50 nelle pagine); senza un colore
+     esplicito qui, un browser/OS in dark mode mostra nero dietro alle pagine
+     che non coprono l'intero viewport. La vera dark mode richiesta dalla spec
+     originale è ancora da fare (nota nel piano), questo è solo il fallback. */
+  background-color: #f8fafc;
+}

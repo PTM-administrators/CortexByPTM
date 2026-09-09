@@ -1,0 +1,27 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "cortex-backend",
+      "runtimeExecutable": "/Users/gabriele/Desktop/Cortex/.venv/bin/python",
+      "runtimeArgs": [
+        "-m",
+        "uvicorn",
+        "app.main:app",
+        "--port",
+        "8000",
+        "--app-dir",
+        "/Users/gabriele/Desktop/Cortex/backend"
+      ],
+      "port": 8000,
+      "autoPort": false
+    },
+    {
+      "name": "cortex-frontend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "/Users/gabriele/Desktop/Cortex/frontend", "run", "dev"],
+      "port": 5173,
+      "autoPort": false
+    }
+  ]
+}

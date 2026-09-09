@@ -1,0 +1,18 @@
+fastapi==0.115.0
+uvicorn[standard]==0.32.0
+sqlalchemy==2.0.35
+alembic==1.13.3
+# psycopg2-binary==2.9.9  # scommenta se passi da SQLite a PostgreSQL
+python-jose[cryptography]==3.3.0
+bcrypt==4.2.0
+cryptography==43.0.1
+python-multipart==0.0.12
+pydantic==2.9.2
+pydantic-settings==2.5.2
+email-validator==2.2.0
+python-dotenv==1.0.1
+requests==2.32.3
+pyodbc==5.1.0  # driver per SQL Server (es. gestionali come Arca) - richiede anche il driver ODBC di sistema
+openpyxl==3.1.5  # export Excel di qualunque tabella (services/export_engine.py)
+reportlab==4.2.5  # export PDF del bilancio (services/export_engine.py)
+google-generativeai==0.8.6  # GeminiLLMClient (services/llm_client.py) - LLM reale, solo se GEMINI_API_KEY è impostata

@@ -5,7 +5,7 @@ che le circondano. I client stessi (GeminiLLMClient/OpenAILLMClient)
 restano verificati manualmente con chiamate reali (vedi PLAN.md): quello
 richiede una chiave API vera e ha un costo, non è automatizzabile qui.
 """
-from app.services.llm_client import _contents_da_storico, _proto_a_python, _reply_di_default
+from app.services.llm.providers import _contents_da_storico, _proto_a_python, _reply_di_default
 
 
 class TestProtoAPython:

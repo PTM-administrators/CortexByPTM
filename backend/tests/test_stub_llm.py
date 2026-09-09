@@ -8,7 +8,7 @@ esattamente la parte che regge la chat quando la quota di Gemini è esaurita
 """
 from datetime import date
 
-from app.services.llm_client import StubLLMClient
+from app.services.llm import StubLLMClient
 
 _CONTESTO_VUOTO = {"industry": "generic", "storico": [], "ultimo_contesto_visualizzazione": None}
 

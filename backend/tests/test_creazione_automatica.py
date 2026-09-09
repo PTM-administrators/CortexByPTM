@@ -179,7 +179,7 @@ class TestStubLLMSegnalazioneSoglia:
     verifica che la frase esatta dell'utente sia ora riconosciuta."""
 
     def test_riconosce_la_frase_reale_dellutente(self) -> None:
-        from app.services.llm_client import StubLLMClient
+        from app.services.llm import StubLLMClient
 
         decisione = StubLLMClient().decide_action(
             "crea una segnalazione per le spese maggiori di 1000 euro",
@@ -190,7 +190,7 @@ class TestStubLLMSegnalazioneSoglia:
         assert decisione.arguments["soglia"] == 1000.0
 
     def test_riconosce_minore_di(self) -> None:
-        from app.services.llm_client import StubLLMClient
+        from app.services.llm import StubLLMClient
 
         decisione = StubLLMClient().decide_action(
             "avvisami se il magazzino scende sotto 10",
@@ -204,7 +204,7 @@ class TestStubLLMSegnalazioneSoglia:
         """"le spese sono maggiori di 1000" non è una richiesta di creare
         nulla, solo un'osservazione — non deve scattare il tool di
         creazione (può comunque cadere sul fallback esplora_tool)."""
-        from app.services.llm_client import StubLLMClient
+        from app.services.llm import StubLLMClient
 
         decisione = StubLLMClient().decide_action(
             "le spese sono maggiori di 1000 rispetto al mese scorso",
